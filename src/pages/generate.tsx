@@ -1,5 +1,7 @@
+import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import React, { useState } from "react";
+import { Button } from "~/component/button";
 
 import { api } from "~/utils/api";
 
@@ -31,6 +33,9 @@ export default function Generate() {
     };
   }
 
+  const session = useSession();
+  const isLoggedIn = !!session.data;
+
   return (
     <>
       <Head>
@@ -39,18 +44,38 @@ export default function Generate() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex h-screen w-full content-center justify-center bg-slate-600">
-        <form onSubmit={(e) => submitForm(e)} className="h-fit">
-          <div className="flex flex-col gap-5 ">
-            <label>Prompt</label>
-            <input
-              type="text"
-              onChange={updateForm("prompt")}
-              className="rounded border-2"
-            />
-            <button className="box-border rounded border-2">Submit</button>
-          </div>
-        </form>
+      <div className="flex h-screen w-full flex-wrap items-center justify-center">
+        <div className="flex flex-col gap-5">
+          {!isLoggedIn && (
+            <Button
+              onClick={() => {
+                signIn().catch(console.error);
+              }}
+            >
+              Login
+            </Button>
+          )}
+
+          {isLoggedIn && (
+            <Button
+              onClick={() => {
+                signOut().catch(console.error);
+              }}
+            >
+              Logout
+            </Button>
+          )}
+
+          {session.data?.user.name}
+
+          <form onSubmit={(e) => submitForm(e)} className="h-fit">
+            <div className="flex flex-col gap-5">
+              <label>Prompt</label>
+              <input type="text" onChange={updateForm("prompt")} />
+              <Button>Submit</Button>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );
