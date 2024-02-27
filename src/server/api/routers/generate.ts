@@ -20,6 +20,8 @@ const openai = new OpenAI({
   apiKey: env.DALLE_API_KEY,
 });
 
+const BUCKET_NAME = env.BUCKET_NAME;
+
 const generateIcon = async (input: string): Promise<ImagesResponse> => {
   if (env.MOCK_DALLE_API !== "true") {
     const response = await openai.images.generate({
@@ -99,7 +101,7 @@ export const generateRouter = createTRPCRouter({
 
       await s3
         .putObject({
-          Bucket: "avatar-generator-as450t4",
+          Bucket: BUCKET_NAME,
           Body: Buffer.from(picture, "base64"),
           Key: icon.id,
           ContentEncoding: "base64",
@@ -107,9 +109,10 @@ export const generateRouter = createTRPCRouter({
         })
         .promise();
 
-      const { data } = response;
+      // const { data } = response;
+
       return {
-        data,
+        imageUrl: `https://${BUCKET_NAME}.s3.ap-southeast-2.amazonaws.com/${icon.id}`,
       };
     }),
 });

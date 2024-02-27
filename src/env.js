@@ -33,6 +33,7 @@ export const env = createEnv({
     MOCK_DALLE_API: z.string(),
     ACCESS_KEY_ID: z.string(),
     SECRET_ACCESS_KEY_ID: z.string(),
+    BUCKET_NAME: z.string(),
   },
 
   /**
@@ -59,6 +60,7 @@ export const env = createEnv({
     MOCK_DALLE_API: process.env.MOCK_DALLE_API,
     ACCESS_KEY_ID: process.env.ACCESS_KEY_ID,
     SECRET_ACCESS_KEY_ID: process.env.SECRET_ACCESS_KEY_ID,
+    BUCKET_NAME: process.env.BUCKET_NAME,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
