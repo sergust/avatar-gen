@@ -101,15 +101,13 @@ export const generateRouter = createTRPCRouter({
 
       await s3
         .putObject({
-          Bucket: BUCKET_NAME,
+          Bucket: BUCKET_NAME!,
           Body: Buffer.from(picture, "base64"),
           Key: icon.id,
           ContentEncoding: "base64",
           ContentType: "image/png",
         })
         .promise();
-
-      // const { data } = response;
 
       return {
         imageUrl: `https://${BUCKET_NAME}.s3.ap-southeast-2.amazonaws.com/${icon.id}`,
