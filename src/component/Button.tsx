@@ -14,7 +14,7 @@ export function Button(
     <button
       {...props}
       className={clsx(
-        "box-border rounded-xl border-2 px-4 py-2  transition-colors",
+        "box-border rounded-xl border-2 px-4 py-2 transition-colors",
         color,
       )}
     >

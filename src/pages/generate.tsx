@@ -1,10 +1,8 @@
-import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import React, { useState } from "react";
 import { Button } from "~/component/button";
 import { api } from "~/utils/api";
 import Image from "next/image";
-import { useBuyCredits } from "~/hooks/useBuyCredits";
 
 export default function Generate() {
   const [form, setForm] = useState({
@@ -12,8 +10,6 @@ export default function Generate() {
   });
 
   const [imageData, setImageData] = useState<string>("");
-
-  const { buyCredits } = useBuyCredits();
 
   const generateIcon = api.generate.generateIcon.useMutation({
     onSuccess(data, variables, context) {
@@ -40,9 +36,6 @@ export default function Generate() {
     };
   }
 
-  const session = useSession();
-  const isLoggedIn = !!session.data;
-
   return (
     <>
       <Head>
@@ -53,33 +46,6 @@ export default function Generate() {
 
       <div className="flex h-screen w-full flex-wrap items-center justify-center">
         <div className="flex flex-col gap-5">
-          {!isLoggedIn && (
-            <Button
-              onClick={() => {
-                signIn().catch(console.error);
-              }}
-            >
-              Login
-            </Button>
-          )}
-
-          {isLoggedIn && (
-            <>
-              <Button onClick={() => buyCredits().catch(console.error)}>
-                Buy credits
-              </Button>
-              <Button
-                onClick={() => {
-                  signOut().catch(console.error);
-                }}
-              >
-                Logout
-              </Button>
-            </>
-          )}
-
-          {session.data?.user.name}
-
           <form onSubmit={(e) => submitForm(e)} className="h-fit">
             <div className="flex flex-col gap-5">
               <label>Prompt</label>
