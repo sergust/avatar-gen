@@ -4,7 +4,7 @@ import { PrimaryLinkButton } from "~/component/PrimaryLinkButton";
 
 function HeroBanner() {
   return (
-    <section className="grid grid-cols-1 gap-10 px-8 pt-12 sm:grid-cols-2 sm:pt-24">
+    <section className="grid grid-cols-1 gap-10 px-8 pt-12 md:grid-cols-2 md:pt-24">
       <div className="flex flex-col gap-4">
         <h1 className="text-6xl">
           Generate avatars with a click of the button
